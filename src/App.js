@@ -29,19 +29,27 @@ function App() {
     }
   ];
 
-  const [todoList, setTodoList] = useSemiPersistentState('saveTodoList', initialTodoList)
+  const [todoList, setTodoList] = useSemiPersistentState('savedTodoList', initialTodoList);
 
   const addTodo = (newTodo) => {
     setTodoList([...todoList, newTodo]);
-    console.log([...todoList,newTodo])
-  }
+  };
+
+  const removeTodo = (item) => {
+    const newTodoLists = todoList.filter(
+      (list) => item.id !== list.id
+    );
+
+    setTodoList(newTodoLists);
+  };
+  
   
 
   return (
     <>
       <h1>Todo List</h1>
       <AddTodoForm onAddTodo={addTodo} />
-      <TodoList todoList = {todoList}/>
+      <TodoList todoList = {todoList} onRemoveTodo={removeTodo}/>
     </>
   );
 }
